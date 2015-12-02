@@ -15,14 +15,14 @@ namespace RarecrewOrgchartAssignment.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "This is just a testing playground for my web projects";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Feel free to contact me through: ";
 
             return View();
         }
