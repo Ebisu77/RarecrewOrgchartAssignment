@@ -1,37 +1,46 @@
-﻿@{
+﻿<head>
+    @{
     ViewBag.Title = "Home Page";
-}
+    }
 
-<head>
+
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
-      google.charts.load('current', {packages:["orgchart"]});
-      google.charts.setOnLoadCallback(drawChart);
+        google.charts.load('current', { packages: ["orgchart"] });
+        google.charts.setOnLoadCallback(drawChart);
 
-      function drawChart() {
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Name');
-        data.addColumn('string', 'Manager');
-        data.addColumn('string', 'ToolTip');
+        function drawChart() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Name');
+            data.addColumn('string', 'Manager');
+            data.addColumn('string', 'ToolTip');
 
-        // For each orgchart box, provide the name, manager, and tooltip to show.
-        data.addRows([
-          [{v:'Mike', f:'Mike<div style="color:red; font-style:italic">President</div>'},
-           '', 'The President'],
-          [{v:'Jim', f:'Jim<div style="color:red; font-style:italic">Vice President</div>'},
-           'Mike', 'VP'],
-          ['Alice', 'Mike', ''],
-          ['Bob', 'Jim', 'Bob Sponge'],
-          ['Carol', 'Bob', '']
-        ]);
+            // For each orgchart box, provide the name, manager, and tooltip to show.
+            data.addRows([
+              [{ v: 'Luciano Pavarotti', f: 'Luciano Pavarotti<div style="color:red; font-style:italic">CEO</div>' },
+               '', 'CEO'],
+              [{ v: 'Placido Domingo', f: 'Placido Domingo<div style="color:red; font-style:italic">Project manager</div>' },
+               'Luciano Pavarotti', 'Project Manager'],
+              [{ v: 'Jose Carreras', f: 'Jose Carreras<div style="color:red; font-style:italic">Project manager</div>' }, 'Luciano Pavarotti', 'Project Manager'],
+              ['Bob', 'Placido Domingo', ''],
+              ['Joe', 'Placido Domingo', ''],
+              ['Sue', 'Placido Domingo', ''],
+              ['Jane', 'Placido Domingo', ''],
+              ['Tim', 'Jose Carreras', ''],
+              ['Tom', 'Jose Carreras', ''],
+              ['Eve', 'Jose Carreras', ''],
+              ['Rose', 'Jose Carreras', '']
+            ]);
 
-        // Create the chart.
-        var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
-        // Draw the chart, setting the allowHtml option to true for the tooltips.
-        chart.draw(data, {allowHtml:true});
-      }
-   </script>
-    </head>
-  <body>
+            // Create the chart.
+            var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
+
+            // Draw the chart, setting the allowHtml option to true for the tooltips.
+            chart.draw(data, { allowHtml: true });
+        }
+    </script>
+</head>
+<body>    
+    <h2 align="center">Basic Organisation Chart</h2> 
     <div id="chart_div"></div>
-  </body>
+</body>
