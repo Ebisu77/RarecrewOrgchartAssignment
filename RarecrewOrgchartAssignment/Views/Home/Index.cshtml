@@ -1,9 +1,9 @@
-﻿<head>
+﻿
     @{
     ViewBag.Title = "Home Page";
     }
 
-
+<head>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
         google.charts.load('current', { packages: ["orgchart"] });
@@ -18,10 +18,11 @@
             // For each orgchart box, provide the name, manager, and tooltip to show.
             data.addRows([
               [{ v: 'Luciano Pavarotti', f: 'Luciano Pavarotti<div style="color:red; font-style:italic">CEO</div>' },
-               '', 'CEO'],
-              [{ v: 'Placido Domingo', f: 'Placido Domingo<div style="color:red; font-style:italic">Project manager</div>' },
-               'Luciano Pavarotti', 'Project Manager'],
-              [{ v: 'Jose Carreras', f: 'Jose Carreras<div style="color:red; font-style:italic">Project manager</div>' }, 'Luciano Pavarotti', 'Project Manager'],
+               '', 'Was Caruso better?'],
+              [{ v: 'Placido Domingo', f: 'Placido Domingo<div style="color:red; font-style:italic">Project Manager</div>' },
+               'Luciano Pavarotti', 'Tenor or baritone?'],
+              [{ v: 'Jose Carreras', f: 'Jose Carreras<div style="color:red; font-style:italic">Project manager</div>' },
+               'Luciano Pavarotti', 'Real fighter'],
               ['Bob', 'Placido Domingo', ''],
               ['Joe', 'Placido Domingo', ''],
               ['Sue', 'Placido Domingo', ''],
@@ -30,17 +31,47 @@
               ['Tom', 'Jose Carreras', ''],
               ['Eve', 'Jose Carreras', ''],
               ['Rose', 'Jose Carreras', '']
-            ]);
+            ]);            
 
-            // Create the chart.
+            // Create the chart
             var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
+            
+
+            // Handling of events
+            function selectHandler() {
+
+                console.log(chart);
+                var selectedItem = chart.getSelection();
+                console.log(selectedItem);                
+
+                console.log(selectedItem[0].column);
+
+                if (selectedItem) {
+                   
+                    $('.google-visualization-orgchart-node').each(function () {
+                        $(this).removeAttr('style');
+                    });
+
+                    $('.google-visualization-orgchart-node').click(function () {
+                        $(this).css('background-color','red');
+                        $(this)[0].parentElement.css('background-color','red');
+                    });
+
+                    console.log("quack");
+                }
+
+            }
+
+            // event trigger for selecting node
+            google.visualization.events.addListener(chart, 'select', selectHandler);
 
             // Draw the chart, setting the allowHtml option to true for the tooltips.
-            chart.draw(data, { allowHtml: true });
+              chart.draw(data, { allowHtml: true });
+            
         }
-    </script>
+    </script>   
 </head>
 <body>    
-    <h2 align="center">Basic Organisation Chart</h2> 
+    <h2 style="text-align:center">Basic Organisation Chart</h2> 
     <div id="chart_div"></div>
 </body>
