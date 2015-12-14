@@ -22,7 +22,7 @@ namespace RarecrewOrgchartAssignment.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Feel free to contact me through: ";
+            ViewBag.Message = "Feel free to contact me at: ";
 
             return View();
         }
