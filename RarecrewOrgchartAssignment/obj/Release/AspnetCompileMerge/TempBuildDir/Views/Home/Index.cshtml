@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    }
+
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', { packages: ["orgchart"] });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Name');
+            data.addColumn('string', 'Manager');
+            data.addColumn('string', 'ToolTip');
+
+            // For each orgchart box, provide the name, manager, and tooltip to show.
+            data.addRows([
+              [{ v: 'Luciano Pavarotti', f: 'Luciano Pavarotti<div style="color:red; font-style:italic">CEO</div>' },
+               '', 'Was Caruso better?'],
+                [{ v: 'Placido Domingo', f: 'Placido Domingo<div style="color:red; font-style:italic">Project Manager</div>' },
+               'Luciano Pavarotti', 'Tenor or baritone?'],
+              [{ v: 'Jose Carreras', f: 'Jose Carreras<div style="color:red; font-style:italic">Project manager</div>' },
+               'Luciano Pavarotti', 'Real fighter'],
+              ['Bob', 'Placido Domingo', ''],
+              ['Joe', 'Placido Domingo', ''],
+              ['Sue', 'Placido Domingo', ''],
+              ['Jane', 'Placido Domingo', ''],
+              ['Tim', 'Jose Carreras', ''],
+              ['Tom', 'Jose Carreras', ''],
+              ['Eve', 'Jose Carreras', ''],
+              ['Rose', 'Jose Carreras', '']
+            ]);
+
+            // Create the chart
+            var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
+
+
+            // Handling of select event
+            function selectHandler() {
+
+                // Clears previous style changes
+                $('.google-visualization-orgchart-node').each(function () {
+                    $(this).removeAttr('style');
+                });
+
+                // Changes style of clicked element
+                $('.google-visualization-orgchart-node').click(function () {
+
+                    // Change color of selected note
+                    $(this).css('background-color', '#00FF66');
+
+                    // Chage color of parent node
+                    var clickedNodeHTML = $(this).html();
+                    if (clickedNodeHTML === 'Bob' ||
+                        clickedNodeHTML === 'Joe' ||
+                        clickedNodeHTML === 'Sue' ||
+                        clickedNodeHTML === 'Jane') {
+                        $('.google-visualization-orgchart-node:contains(Placido Domingo)').css('background-color', '#00FF66');
+                    }
+                    else if (clickedNodeHTML === 'Tim' ||
+                        clickedNodeHTML === 'Tom' ||
+                        clickedNodeHTML === 'Eve' ||
+                        clickedNodeHTML === 'Rose') {
+                        $('.google-visualization-orgchart-node:contains(Jose Carreras)').css('background-color', '#00FF66');
+                    }
+
+                    // Allways highlight CEO 
+                    $('.google-visualization-orgchart-node:contains(Luciano Pavarotti)').css('background-color', '#00FF66');
+
+                    // Maintenance note: This whole solution (choosing what to highlight based on innerHTML) is just a workaround, 
+                    // caused by missing features in Google chart tools, mostly inability to effectively work with parent nodes
+                    // or to choose columns in the table (they are allways null)
+                });
+            }
+
+            // Event trigger for selecting node
+            google.visualization.events.addListener(chart, 'select', selectHandler);
+
+            // Draw the chart, setting the allowHtml option to true for the tooltips.
+            chart.draw(data, { allowHtml: true });
+
+        }
+    </script>
+</head>
+<body>
+    <h2 style="text-align: center">Basic Organisation Chart</h2>
+    <div id="chart_div"></div>
+</body>
